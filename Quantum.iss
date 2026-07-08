@@ -66,13 +66,9 @@ Source: "..\quantum_stub.exe";  DestDir: "{app}"; Flags: ignoreversion
 Source: "..\README.md";         DestDir: "{app}"; Flags: ignoreversion
 Source: "..\LICENSE";           DestDir: "{app}"; DestName: "LICENSE.txt"; Flags: ignoreversion
 Source: "TermsAndConditions.txt"; DestDir: "{app}"; Flags: ignoreversion
-; --- Example .sa programs (top-level + demo folder; skips the large library) ---
-Source: "..\examples\*.sa";     DestDir: "{app}\examples"; Flags: ignoreversion
-Source: "..\examples\demo\*";   DestDir: "{app}\examples\demo"; Flags: ignoreversion recursesubdirs
 
 [Icons]
 ; Start-menu entries.
-Name: "{group}\Quantum Examples Folder"; Filename: "{app}\examples"
 Name: "{group}\Quantum README";          Filename: "{app}\README.md"
 Name: "{group}\Uninstall Quantum";       Filename: "{uninstallexe}"
 ; Optional desktop shortcut (folder).
