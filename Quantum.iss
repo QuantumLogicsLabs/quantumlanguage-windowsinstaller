@@ -7,7 +7,9 @@
 ;             ->  Additional tasks (Add to PATH, pre-checked)
 ;             ->  Ready to install  ->  Installing  ->  Finish
 ;
-;  Build:  "%LOCALAPPDATA%\Programs\Inno Setup 6\ISCC.exe" installer\Quantum.iss
+;  Build:  build-quantum.bat, then
+;          "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" installer\Quantum.iss
+;          (or %LOCALAPPDATA%\Programs\Inno Setup 6\ISCC.exe for a per-user Inno Setup)
 ; ============================================================================
 
 #define MyAppName       "Quantum Programming Language"
@@ -59,9 +61,12 @@ Name: "desktopicon"; Description: "Create a desktop shortcut to the Quantum fold
 
 [Files]
 ; --- Core binaries (must live in the same folder) ---
-Source: "..\quantum.exe";       DestDir: "{app}"; Flags: ignoreversion
-Source: "..\qrun.exe";          DestDir: "{app}"; Flags: ignoreversion
-Source: "..\quantum_stub.exe";  DestDir: "{app}"; Flags: ignoreversion
+; Taken from build\, where build-quantum.bat writes them: run it first so
+; the installer ships the current compiler.
+Source: "..\build\quantum.exe";       DestDir: "{app}"; Flags: ignoreversion
+Source: "..\build\qrun.exe";          DestDir: "{app}"; Flags: ignoreversion
+Source: "..\build\quantum_stub.exe";  DestDir: "{app}"; Flags: ignoreversion
+Source: "..\build\qpm.exe";           DestDir: "{app}"; Flags: ignoreversion
 ; --- Documentation ---
 Source: "..\README.md";         DestDir: "{app}"; Flags: ignoreversion
 Source: "..\LICENSE";           DestDir: "{app}"; DestName: "LICENSE.txt"; Flags: ignoreversion
