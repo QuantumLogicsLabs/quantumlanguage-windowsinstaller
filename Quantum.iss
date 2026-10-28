@@ -14,7 +14,14 @@
 
 #define MyAppName       "Quantum Programming Language"
 #define MyAppShortName  "Quantum"
-#define MyAppVersion    "2.0.4"
+; the release command (quantum version.sa) passes the version: ISCC /DMyAppVersion=3.0.1
+#ifndef MyAppVersion
+  #define MyAppVersion  "3.0.0"
+#endif
+; where the compiled programs are taken from (relative to this script)
+#ifndef BuildDir
+  #define BuildDir      "..\build"
+#endif
 #define MyAppPublisher  "Muhammad Saad Amin (@SENODROOM)"
 #define MyAppURL        "https://github.com/SENODROOM/Quantum-Language"
 #define MyAppExeName    "quantum.exe"
@@ -62,11 +69,12 @@ Name: "desktopicon"; Description: "Create a desktop shortcut to the Quantum fold
 [Files]
 ; --- Core binaries (must live in the same folder) ---
 ; Taken from build\, where build-quantum.bat writes them: run it first so
-; the installer ships the current compiler.
-Source: "..\build\quantum.exe";       DestDir: "{app}"; Flags: ignoreversion
-Source: "..\build\qrun.exe";          DestDir: "{app}"; Flags: ignoreversion
-Source: "..\build\quantum_stub.exe";  DestDir: "{app}"; Flags: ignoreversion
-Source: "..\build\qpm.exe";           DestDir: "{app}"; Flags: ignoreversion
+; the installer ships the current compiler. (The release command passes
+; /DBuildDir=..\build-release.)
+Source: "{#BuildDir}\quantum.exe";       DestDir: "{app}"; Flags: ignoreversion
+Source: "{#BuildDir}\qrun.exe";          DestDir: "{app}"; Flags: ignoreversion
+Source: "{#BuildDir}\quantum_stub.exe";  DestDir: "{app}"; Flags: ignoreversion
+Source: "{#BuildDir}\qpm.exe";           DestDir: "{app}"; Flags: ignoreversion
 ; --- Documentation ---
 Source: "..\README.md";         DestDir: "{app}"; Flags: ignoreversion
 Source: "..\LICENSE";           DestDir: "{app}"; DestName: "LICENSE.txt"; Flags: ignoreversion
