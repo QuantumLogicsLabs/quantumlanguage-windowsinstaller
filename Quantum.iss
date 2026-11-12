@@ -7,16 +7,20 @@
 ;             ->  Additional tasks (Add to PATH, pre-checked)
 ;             ->  Ready to install  ->  Installing  ->  Finish
 ;
-;  Build:  build-quantum.bat, then
+;  Build:  build-quantum.bat, then installer\build-installer.bat
+;          (bumps version.txt, runs ISCC, copies the setup to the website), or
 ;          "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" installer\Quantum.iss
 ;          (or %LOCALAPPDATA%\Programs\Inno Setup 6\ISCC.exe for a per-user Inno Setup)
 ; ============================================================================
 
 #define MyAppName       "Quantum Programming Language"
 #define MyAppShortName  "Quantum"
-; the release command (quantum version.sa) passes the version: ISCC /DMyAppVersion=3.0.1
+; the version: the first line of version.txt (build-installer.bat bumps it),
+; unless given on the command line: ISCC /DMyAppVersion=3.0.1
 #ifndef MyAppVersion
-  #define MyAppVersion  "3.0.0"
+  #define VersionFile   FileOpen(AddBackslash(SourcePath) + "version.txt")
+  #define MyAppVersion  Trim(FileRead(VersionFile))
+  #expr FileClose(VersionFile)
 #endif
 ; where the compiled programs are taken from (relative to this script)
 #ifndef BuildDir
